@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:combinedmq="http://www.github.com/schema/combinedmq"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.github.com/schema/combinedmq
+        http://www.github.com/schema/combinedmq/combinedmq-spring.xsd">
+
+    <bean id="helloworldService" class="com.github.combinedmq.spring.service.GreetingServiceImpl"/>
+
+    <combinedmq:queue id="helloworldQueue" name="x.y.z" type="point_to_point"
+                      interface="com.github.combinedmq.spring.service.GreetingService"/>
+    <combinedmq:consumer queue-ref="helloworldQueue" implement-ref="helloworldService"/>
+
+</beans>

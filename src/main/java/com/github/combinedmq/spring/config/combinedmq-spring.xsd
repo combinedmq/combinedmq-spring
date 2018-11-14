@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.github.com/schema/combinedmq"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:tool="http://www.springframework.org/schema/tool"
+            targetNamespace="http://www.github.com/schema/combinedmq"
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:element name="queue">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                    The queue configuration.
+                ]]>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:ID" use="required">
+                <xsd:annotation>
+                    <xsd:documentation><![CDATA[ The unique identifier for a bean. ]]></xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="name" use="required" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                        The queueName.
+
+                         ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="type" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                        The queueType.
+                         ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="point_to_point"/>
+                        <xsd:enumeration value="publish_subscribe"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="interface" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                            Bind the interface to the queue.
+                        ]]>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation>
+                            <tool:expected-type type="java.lang.Class"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="consumer">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                  Consumers of Mq.
+                ]]>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:ID">
+                <xsd:annotation>
+                    <xsd:documentation><![CDATA[ The unique identifier for a bean. ]]></xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="queue-ref" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                  A queue id
+                ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="implement-ref" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                        The listener implementation instance bean id,and must implement the queue interface
+                    ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="producer">
+        <xsd:annotation>
+            <xsd:documentation>
+                <![CDATA[
+                  Producer of Mq.
+                ]]>
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:ID" use="required">
+                <xsd:annotation>
+                    <xsd:documentation><![CDATA[ The unique identifier for a bean. ]]></xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="queue-ref" type="xsd:string" use="required">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                  The queue id
+                ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+            <xsd:attribute name="delay-millis" type="xsd:long">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <![CDATA[
+                            Send the delayed message through this interface.
+                        ]]>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
