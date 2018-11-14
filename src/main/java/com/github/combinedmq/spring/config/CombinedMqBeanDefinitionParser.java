@@ -68,7 +68,9 @@ public class CombinedMqBeanDefinitionParser implements BeanDefinitionParser {
             String queueRef = element.getAttribute("queue-ref");
             String delayMillis = element.getAttribute("delay-millis");
             beanDefinition.getPropertyValues().add("queueRef", new RuntimeBeanReference(queueRef));
-            beanDefinition.getPropertyValues().add("delayMillis", Long.parseLong(delayMillis));
+            if (!StringUtils.isEmpty(delayMillis)) {
+                beanDefinition.getPropertyValues().add("delayMillis", Long.parseLong(delayMillis));
+            }
         }
 
         parserContext.getRegistry().registerBeanDefinition(id, beanDefinition);
