@@ -56,7 +56,7 @@ public class QueueBean implements InitializingBean {
         for (Method method : methods) {
             Class<?> returnType = method.getReturnType();
             if (returnType != void.class) {
-                throw new WrongMethodTypeException("The queue interface allows only void type.");
+                throw new WrongMethodTypeException("The queue interface only allows void types.");
             }
         }
     }
