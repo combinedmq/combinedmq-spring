@@ -1,8 +1,6 @@
 package com.github.combinedmq.spring.annotation;
 
 import com.github.combinedmq.spring.ConsumerBean;
-import com.github.combinedmq.spring.annotation.ConsumerListener;
-import com.github.combinedmq.spring.annotation.Queue;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -37,7 +35,7 @@ public class ConsumerAnnotationProcessor implements BeanDefinitionRegistryPostPr
             Class<?> beanClass;
             try {
                 beanClass = ClassUtils.forName(beanClassName, classLoader);
-                ConsumerListener annotation = AnnotationUtils.findAnnotation(beanClass, ConsumerListener.class);
+                Consumer annotation = AnnotationUtils.findAnnotation(beanClass, Consumer.class);
                 if (null == annotation) {
                     continue;
                 }

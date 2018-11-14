@@ -6,6 +6,7 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -42,11 +43,13 @@ public class CombinedMqScanRegistrar implements ImportBeanDefinitionRegistrar {
     protected void registerQueueBeanDefinitions(BeanDefinitionRegistry registry, String basePackage) {
         CombinedMqClassPathBeanDefinitionScanner scanner = new CombinedMqClassPathBeanDefinitionScanner(registry);
         scanner.addIncludeFilter(new AnnotationTypeFilter(Queue.class));
+        scanner.setBeanNameGenerator(new DefaultBeanNameGenerator());
         Set<BeanDefinitionHolder> beanDefinitionHolders = scanner.doScan(basePackage);
         if (!CollectionUtils.isEmpty(beanDefinitionHolders)) {
             for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
                 registry.removeBeanDefinition(beanDefinitionHolder.getBeanName());
                 String beanClassName = beanDefinitionHolder.getBeanDefinition().getBeanClassName();
+                System.out.println(beanDefinitionHolder.getBeanName());
                 Class<?> interfaceClass = null;
                 try {
                     interfaceClass = ClassUtils.forName(beanClassName, this.getClass().getClassLoader());

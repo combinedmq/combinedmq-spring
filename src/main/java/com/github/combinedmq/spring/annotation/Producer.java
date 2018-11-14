@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  *
  * @author xiaoyu
  * @see Queue
- * @see ConsumerListener
+ * @see Consumer
  * @since 1.0.0
  */
 @Target(ElementType.FIELD)

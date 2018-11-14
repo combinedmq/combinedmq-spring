@@ -1,8 +1,6 @@
 package com.github.combinedmq.spring.annotation;
 
 import com.github.combinedmq.spring.ProducerBean;
-import com.github.combinedmq.spring.annotation.Producer;
-import com.github.combinedmq.spring.annotation.Queue;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -38,7 +36,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class ProducerAnnotationProcessor extends InstantiationAwareBeanPostProcessorAdapter
         implements MergedBeanDefinitionPostProcessor, PriorityOrdered, BeanFactoryAware {
-    protected final Log logger = LogFactory.getLog(getClass());
+    private final Log logger = LogFactory.getLog(getClass());
 
     private final ConcurrentMap<String, InjectionMetadata> injectionMetadataCache =
             new ConcurrentHashMap<String, InjectionMetadata>(256);
