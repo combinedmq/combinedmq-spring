@@ -26,10 +26,10 @@ public class ConsumerHolder {
             if (consumer == null) {
                 ConnectionFactory connectionFactory;
                 if (configuration instanceof RabbitMqConfiguration) {
-                    connectionFactory = new RabbitMqConnectionFactory(configuration);
+                    connectionFactory = new RabbitMqConnectionFactory(configuration, false);
                     consumer = new RabbitMqConsumer(connectionFactory);
                 } else if (configuration instanceof ActiveMqConfiguration) {
-                    connectionFactory = new ActiveMqConnectionFactory(configuration);
+                    connectionFactory = new ActiveMqConnectionFactory(configuration, false);
                     consumer = new ActiveMqConsumer(connectionFactory);
                 } else if (configuration instanceof KafkaConfiguration) {
                     consumer = new KafkaConsumer(configuration);
