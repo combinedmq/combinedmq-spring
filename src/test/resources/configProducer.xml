@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:combinedmq="http://www.github.com/schema/combinedmq"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
+
+
 		http://www.github.com/schema/combinedmq
         http://www.github.com/schema/combinedmq/combinedmq-spring.xsd">
 
-    <context:component-scan base-package="com.github.combinedmq"/>
 
     <combinedmq:queue id="helloworldQueue" name="x.y.z" type="point_to_point"
-                      interface="com.github.combinedmq.spring.service.GreetingService" />
-    <combinedmq:producer id="helloworldServiceProducer" queue-ref="helloworldQueue" delay-millis="1"/>
+                      interface="com.github.combinedmq.spring.service.GreetingService"/>
+
+    <combinedmq:producer id="helloworldServiceProducer" queue-ref="helloworldQueue" delay-millis="5000"/>
 
 </beans>

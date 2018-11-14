@@ -1,8 +1,9 @@
-package com.github.combinedmq.spring.config;
+package com.github.combinedmq.spring.annotation;
 
-import com.github.combinedmq.spring.service.GreetingService;
+import com.github.combinedmq.spring.service.Greeting2Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -13,10 +14,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author xiaoyu
  */
 @Slf4j
-public class NamespaceProducerTest {
+@Component
+public class ProducerTest {
+    @Producer(delayMillis = 5000)
+    private Greeting2Service greeting2Service;
+
     public static void main(String[] args) throws Exception {
-        final ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("configProducer.xml");
-        final GreetingService greetingService = ac.getBean(GreetingService.class);
+        final ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("annotationProducer.xml");
+        final Greeting2Service greetingService = ac.getBean(Greeting2Service.class);
         log.info("启动成功");
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         int count = 1;

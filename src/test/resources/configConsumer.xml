@@ -5,13 +5,15 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
 		http://www.github.com/schema/combinedmq
         http://www.github.com/schema/combinedmq/combinedmq-spring.xsd">
 
-    <bean id="helloworldService" class="com.github.combinedmq.spring.service.GreetingServiceImpl"/>
+    <bean id="greetingService" class="com.github.combinedmq.spring.service.GreetingServiceImpl"/>
 
-    <combinedmq:queue id="helloworldQueue" name="x.y.z" type="point_to_point"
+    <combinedmq:queue id="greetingQueue" name="x.y.z" type="point_to_point"
                       interface="com.github.combinedmq.spring.service.GreetingService"/>
-    <combinedmq:consumer queue-ref="helloworldQueue" implement-ref="helloworldService"/>
+    <combinedmq:consumer queue-ref="greetingQueue" implement-ref="greetingService"/>
 
 </beans>
