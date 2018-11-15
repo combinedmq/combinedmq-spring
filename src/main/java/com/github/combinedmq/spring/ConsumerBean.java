@@ -1,19 +1,16 @@
 package com.github.combinedmq.spring;
 
 import com.github.combinedmq.activemq.ActiveMqConfiguration;
-import com.github.combinedmq.activemq.ActiveMqConfigurationFactory;
 import com.github.combinedmq.activemq.ActiveMqQueue;
 import com.github.combinedmq.configuration.Configuration;
 import com.github.combinedmq.consumer.Consumer;
 import com.github.combinedmq.exception.MqException;
 import com.github.combinedmq.kafka.KafkaConfiguration;
-import com.github.combinedmq.kafka.KafkaConfigurationFactory;
 import com.github.combinedmq.kafka.KafkaQueue;
 import com.github.combinedmq.message.Message;
 import com.github.combinedmq.message.MessageListener;
 import com.github.combinedmq.message.Queue;
 import com.github.combinedmq.rabbitmq.RabbitMqConfiguration;
-import com.github.combinedmq.rabbitmq.RabbitMqConfigurationFactory;
 import com.github.combinedmq.rabbitmq.RabbitMqQueue;
 import com.github.combinedmq.spring.support.ConsumerHolder;
 import com.github.combinedmq.spring.support.MessageWrapper;
@@ -33,7 +30,7 @@ import java.util.List;
  */
 public class ConsumerBean implements InitializingBean, DisposableBean, ResourceLoaderAware, ApplicationListener<ContextRefreshedEvent> {
     private static final Serializer SERIALIZER = new JSONSerializer();
-
+    private Configuration configuration;
     private QueueBean queueRef;
     private Object implementRef;
     private ResourceLoader resourceLoader;
@@ -59,36 +56,22 @@ public class ConsumerBean implements InitializingBean, DisposableBean, ResourceL
 
     }
 
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
     @Override
     public void destroy() throws Exception {
 
     }
 
-    private Configuration checkConfig() {
-        Configuration activemqConfig = new ActiveMqConfigurationFactory().getConfiguration();
-        Configuration rabbitmqConfig = new RabbitMqConfigurationFactory().getConfiguration();
-        Configuration kafkaConfig = new KafkaConfigurationFactory().getConfiguration();
-        if (activemqConfig == null && rabbitmqConfig == null && kafkaConfig == null) {
-            throw new IllegalStateException("CombinedMq配置不存在");
-        }
-        if ((rabbitmqConfig != null && activemqConfig != null)
-                || (rabbitmqConfig != null && kafkaConfig != null)
-                || (activemqConfig != null && kafkaConfig != null)) {
-            throw new IllegalStateException("配置重复, rabbitmq、activemq、kafka只能存在一种");
-        }
-        if (rabbitmqConfig != null) {
-            return rabbitmqConfig;
-        } else if (activemqConfig != null) {
-            return activemqConfig;
-        } else if (kafkaConfig != null) {
-            return kafkaConfig;
-        }
-        throw new NullPointerException();
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Configuration configuration = checkConfig();
         Queue queue = null;
         if (configuration instanceof RabbitMqConfiguration) {
             queue = new RabbitMqQueue(queueRef.getName());

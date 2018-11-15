@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author xiaoyu
  */
 @Slf4j
-@Component
+//@Component
 public class ProducerTest {
     @Producer(delayMillis = 5000)
     private Greeting2Service greeting2Service;

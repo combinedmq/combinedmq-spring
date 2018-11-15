@@ -1,18 +1,15 @@
 package com.github.combinedmq.spring;
 
 import com.github.combinedmq.activemq.ActiveMqConfiguration;
-import com.github.combinedmq.activemq.ActiveMqConfigurationFactory;
 import com.github.combinedmq.activemq.ActiveMqMessage;
 import com.github.combinedmq.activemq.ActiveMqQueue;
 import com.github.combinedmq.configuration.Configuration;
 import com.github.combinedmq.kafka.KafkaConfiguration;
-import com.github.combinedmq.kafka.KafkaConfigurationFactory;
 import com.github.combinedmq.kafka.KafkaMessage;
 import com.github.combinedmq.kafka.KafkaQueue;
 import com.github.combinedmq.message.Message;
 import com.github.combinedmq.message.Queue;
 import com.github.combinedmq.rabbitmq.RabbitMqConfiguration;
-import com.github.combinedmq.rabbitmq.RabbitMqConfigurationFactory;
 import com.github.combinedmq.rabbitmq.RabbitMqMessage;
 import com.github.combinedmq.rabbitmq.RabbitMqQueue;
 import com.github.combinedmq.spring.proxy.JavassistProxyFactory;
@@ -33,6 +30,7 @@ import java.util.Arrays;
 public class ProducerBean implements FactoryBean, InitializingBean {
     private static final Serializer SERIALIZER = new JSONSerializer();
     private ProxyFactory proxyFactory;
+    private Configuration configuration;
     private QueueBean queueRef;
     private Long delayMillis;
     private transient volatile Object ref;
@@ -40,6 +38,13 @@ public class ProducerBean implements FactoryBean, InitializingBean {
     public ProducerBean() {
     }
 
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 
     public QueueBean getQueueRef() {
         return queueRef;
@@ -71,7 +76,6 @@ public class ProducerBean implements FactoryBean, InitializingBean {
                         return (getClass().isInterface() ? "interface " : (getClass().isPrimitive() ? "" : "class "))
                                 + getClass().getName();
                     }
-                    Configuration configuration = checkConfig();
                     if (ClassUtils.hasMethod(queueRef.getInterface(), method.getName(), method.getParameterTypes())) {
                         MessageWrapper wrapper = new MessageWrapper();
                         wrapper.setMethodName(method.getName());
@@ -96,28 +100,6 @@ public class ProducerBean implements FactoryBean, InitializingBean {
             });
         }
         return ref;
-    }
-
-    private Configuration checkConfig() {
-        Configuration activemqConfig = new ActiveMqConfigurationFactory().getConfiguration();
-        Configuration rabbitmqConfig = new RabbitMqConfigurationFactory().getConfiguration();
-        Configuration kafkaConfig = new KafkaConfigurationFactory().getConfiguration();
-        if (activemqConfig == null && rabbitmqConfig == null && kafkaConfig == null) {
-            throw new IllegalStateException("CombinedMq配置不存在");
-        }
-        if ((rabbitmqConfig != null && activemqConfig != null)
-                || (rabbitmqConfig != null && kafkaConfig != null)
-                || (activemqConfig != null && kafkaConfig != null)) {
-            throw new IllegalStateException("配置重复，rabbitmq、activemq、kafka只能存在一种");
-        }
-        if (rabbitmqConfig != null) {
-            return rabbitmqConfig;
-        } else if (activemqConfig != null) {
-            return activemqConfig;
-        } else if (kafkaConfig != null) {
-            return kafkaConfig;
-        }
-        throw new NullPointerException();
     }
 
     @Override

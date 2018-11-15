@@ -1,5 +1,6 @@
 package com.github.combinedmq.spring.annotation;
 
+import com.github.combinedmq.spring.ConfigBean;
 import com.github.combinedmq.spring.ProducerBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -150,6 +151,7 @@ public class ProducerAnnotationProcessor extends InstantiationAwareBeanPostProce
             if (!registry.containsBeanDefinition(producerBeanId)) {
                 BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(ProducerBean.class);
                 builder.addPropertyReference("queueRef", queueInterfaceClass.getName());
+                builder.addPropertyReference("configuration", ConfigBean.CONFIG_BEAN_NAME);
                 if (delayMillis > 0) {
                     builder.addPropertyValue("delayMillis", delayMillis);
                 }

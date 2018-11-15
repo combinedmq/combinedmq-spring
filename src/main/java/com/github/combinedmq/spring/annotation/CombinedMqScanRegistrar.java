@@ -49,8 +49,7 @@ public class CombinedMqScanRegistrar implements ImportBeanDefinitionRegistrar {
             for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
                 registry.removeBeanDefinition(beanDefinitionHolder.getBeanName());
                 String beanClassName = beanDefinitionHolder.getBeanDefinition().getBeanClassName();
-                System.out.println(beanDefinitionHolder.getBeanName());
-                Class<?> interfaceClass = null;
+                Class<?> interfaceClass;
                 try {
                     interfaceClass = ClassUtils.forName(beanClassName, this.getClass().getClassLoader());
                     if (!Modifier.isInterface(interfaceClass.getModifiers())) {
