@@ -1,5 +1,6 @@
 package com.github.combinedmq.spring.annotation;
 
+import com.github.combinedmq.spring.ConfigBean;
 import com.github.combinedmq.spring.ConsumerBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -74,7 +75,8 @@ public class ConsumerAnnotationProcessor implements BeanDefinitionRegistryPostPr
         for (Queue queue : queueClassMap.keySet()) {
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(ConsumerBean.class);
             builder.addPropertyReference("implementRef", implementRef)
-                    .addPropertyReference("queueRef", queueClassMap.get(queue).getName());
+                    .addPropertyReference("queueRef", queueClassMap.get(queue).getName())
+                    .addPropertyReference("configuration", ConfigBean.CONFIG_BEAN_NAME);
             BeanDefinitionReaderUtils.registerWithGeneratedName(builder.getBeanDefinition(), registry);
         }
     }
