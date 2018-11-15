@@ -9,7 +9,6 @@ import com.github.combinedmq.consumer.Consumer;
 import com.github.combinedmq.exception.MqException;
 import com.github.combinedmq.kafka.KafkaConfiguration;
 import com.github.combinedmq.kafka.KafkaConsumer;
-import com.github.combinedmq.producer.Producer;
 import com.github.combinedmq.rabbitmq.RabbitMqConfiguration;
 import com.github.combinedmq.rabbitmq.RabbitMqConnectionFactory;
 import com.github.combinedmq.rabbitmq.RabbitMqConsumer;
@@ -19,7 +18,6 @@ import com.github.combinedmq.rabbitmq.RabbitMqConsumer;
  */
 public class ConsumerHolder {
     private static volatile Consumer consumer;
-    private static volatile Producer producer;
 
     public static Consumer get(Configuration configuration) {
         synchronized (ConsumerHolder.class) {
