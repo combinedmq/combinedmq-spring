@@ -9,7 +9,7 @@
     <version>1.0.1</version>
     <name>CombinedMq Spring</name>
 
-    <description>A component that integrates rabbitmq、activemq、kafka</description>
+    <description>Spring support for combinedmq</description>
     <url>https://github.com/combinedmq/combinedmq-spring</url>
 
     <licenses>
