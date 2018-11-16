@@ -3,7 +3,7 @@ CombinedMq Spring
 [![Build Status](https://travis-ci.com/combinedmq/combinedmq-spring.svg?branch=master)](https://travis-ci.com/combinedmq/combinedmq-spring)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.combinedmq/combinedmq-spring.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.combinedmq%22%20AND%20a:%22combinedmq-spring%22)
 
-[中文版文档](https://github.com/combinedmq/combinedmq-spring/blob/v1.0.x/README_zh.md)
+[中文版文档](https://github.com/combinedmq/combinedmq-spring/blob/master/README_zh.md)
 
 CombinedMq Spring can help you integrate CombinedMq into Spring, and it is very convenient to complete the integration work through the spring schema configuration.
 ### Overview
