@@ -58,7 +58,7 @@ public class ProducerTest {
     }
 }
 ```
-### Step 4: Spring Schema configuration - producer
+### Step 4: Spring Schema configuration - consumer
 Add the schema content of CombinedMq in applicationContext.xml
 ```
 <?xml version="1.0" encoding="UTF-8"?>

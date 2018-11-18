@@ -59,7 +59,7 @@ public class ProducerTest {
     }
 }
 ```
-### Step 4: Spring Schema配置 - producer
+### Step 4: Spring Schema配置 - consumer
 在applicationContext.xml中加入CombinedMq的schema内容
 
 ```
