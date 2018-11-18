@@ -19,7 +19,7 @@ schema配置主要有三个元素：
 <dependency>
   <groupId>com.github.combinedmq</groupId>
   <artifactId>combinedmq-spring</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 ### Step 2: 创建一个接口

@@ -18,7 +18,7 @@ The schema configuration has three main elements:
 <dependency>
   <groupId>com.github.combinedmq</groupId>
   <artifactId>combinedmq-spring</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 ### Step 2: Create an interface
