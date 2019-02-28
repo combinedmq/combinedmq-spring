@@ -3,17 +3,16 @@ CombinedMq Spring
 [![Build Status](https://travis-ci.com/combinedmq/combinedmq-spring.svg?branch=master)](https://travis-ci.com/combinedmq/combinedmq-spring)
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.combinedmq/combinedmq-spring.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.combinedmq%22%20AND%20a:%22combinedmq-spring%22)
 
-[中文版文档](https://github.com/combinedmq/combinedmq-spring/blob/master/README_zh.md)
+CombinedMq Spring可以帮助您将CombinedMq集成到Spring中，通过spring schema配置的方式，能够非常方便的完成集成工作。
 
-CombinedMq Spring can help you integrate CombinedMq into Spring, and it is very convenient to complete the integration work through the spring schema configuration.
-### Overview
+### 概述
 
-The schema configuration has three main elements:
-1. queue - Define a queue and associate an interface
-2. producer - Queue interface proxy for sending messages
-3. consumer - An implementation that references a queue interface for receiving messages
-## Steps for usage
-### Step 1: Maven dependency
+schema配置主要有三个元素：
+1. queue - 定义一个队列，并关联一个接口
+2. producer - 队列接口的代理，用于发送消息
+3. consumer - 引用一个队列接口的实现，用于接收消息
+## 使用步骤
+### Step 1: Maven依赖
 ```xml
 <dependency>
   <groupId>com.github.combinedmq</groupId>
@@ -21,15 +20,15 @@ The schema configuration has three main elements:
   <version>1.0.2</version>
 </dependency>
 ```
-### Step 2: Create an interface
-All method return types of this interface can only be void type:
+### Step 2: 创建一个接口
+该接口的所有方法返回类型都只能是void类型:
 ```java
 public interface GreetingService {
     void sayHi(String name);
 }
 ```
-### Step 3: Spring Schema configuration - producer
-Add the schema content of CombinedMq in applicationContext.xml
+### Step 3: Spring Schema配置 - producer
+在applicationContext.xml中加入CombinedMq的schema内容
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans ...
@@ -46,7 +45,7 @@ Add the schema content of CombinedMq in applicationContext.xml
 
 </beans>
 ```
-A producer proxy can be obtained by annotating @Autowired:
+可以通过@Autowired注解得到一个producer代理:
 ```java
 @Service
 public class ProducerTest {
@@ -58,8 +57,9 @@ public class ProducerTest {
     }
 }
 ```
-### Step 4: Spring Schema configuration - consumer
-Add the schema content of CombinedMq in applicationContext.xml
+### Step 4: Spring Schema配置 - consumer
+在applicationContext.xml中加入CombinedMq的schema内容
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans ...
@@ -77,8 +77,9 @@ Add the schema content of CombinedMq in applicationContext.xml
 
 </beans>
 ```
-### Step 5: Connection related configuration file - combinedmq.yml
-Add the combinedmq.yml file in the resource root directory. If you use rabbitmq, you can add the following to the yml file: 
+### Step 5: 连接相关的配置文件 - combinedmq.yml
+在资源根目录下添加combinedmq.yml文件，如果您使用rabbitmq，可以在yml文件中加入下面内容：
+ 
 ```yaml
 rabbitmq:
   host: 10.1.7.22
@@ -87,8 +88,8 @@ rabbitmq:
   password: xiaoyu
   virtualHost: /
   consumerListener:
-    concurrency: 5 #Number of consumers
-  producerPool: #Connection pool configuration, connection pool is only valid for producers
+    concurrency: 5 #消费者数量
+  producerPool: #连接池配置，连接池只是针对生产者有效
     maxTotal: 100
     maxIdle: 20
     minIdle: 10
@@ -98,7 +99,7 @@ rabbitmq:
     testOnBorrow: false
     testOnReturn: false
     testWhileIdle: true
-#The consumer listener and producer pool can exist at different times
+#consumerListener和producerPool可以不同时存在
 ```
-activemq, kafka and other configurations can view this[configuration file](https://github.com/combinedmq/combinedmq/blob/master/src/test/resources/combinedmq.yml)。
-（When integrated into spring, only one of rabbitmq, activemq, and kafka can be used in the combinedmq.yml file.）
+activemq、kafka等其他配置可以查看此[配置文件](https://github.com/combinedmq/combinedmq/blob/master/src/test/resources/combinedmq.yml)。
+（在集成到spring中时，combinedmq.yml文件中只能使用rabbitmq、activemq、kafka其中一种）
