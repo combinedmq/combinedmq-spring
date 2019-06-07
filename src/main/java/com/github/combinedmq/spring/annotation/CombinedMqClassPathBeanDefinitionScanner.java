@@ -3,9 +3,11 @@ package com.github.combinedmq.spring.annotation;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import java.util.Set;
 
@@ -31,6 +33,9 @@ public class CombinedMqClassPathBeanDefinitionScanner extends ClassPathBeanDefin
 
     @Override
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
+        resetFilters(false);
+        addIncludeFilter(new AnnotationTypeFilter(Queue.class));
+        setBeanNameGenerator(new DefaultBeanNameGenerator());
         return super.doScan(basePackages);
     }
 

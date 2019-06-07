@@ -6,12 +6,10 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultBeanNameGenerator;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -42,8 +40,6 @@ public class CombinedMqScanRegistrar implements ImportBeanDefinitionRegistrar {
 
     protected void registerQueueBeanDefinitions(BeanDefinitionRegistry registry, String basePackage) {
         CombinedMqClassPathBeanDefinitionScanner scanner = new CombinedMqClassPathBeanDefinitionScanner(registry);
-        scanner.addIncludeFilter(new AnnotationTypeFilter(Queue.class));
-        scanner.setBeanNameGenerator(new DefaultBeanNameGenerator());
         Set<BeanDefinitionHolder> beanDefinitionHolders = scanner.doScan(basePackage);
         if (!CollectionUtils.isEmpty(beanDefinitionHolders)) {
             for (BeanDefinitionHolder beanDefinitionHolder : beanDefinitionHolders) {
